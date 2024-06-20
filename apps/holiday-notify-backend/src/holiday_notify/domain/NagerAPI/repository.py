@@ -5,7 +5,6 @@ log = logging.getLogger("holiday_notify.domain.NagerAPI.repository")
 from .models import NagerCountryMetaModel, NagerCountryMetaRepositoryBase
 from .models import (
     NagerCountryModel,
-    NagerBorderCountryModel,
     NagerCountryRepositoryBase,
 )
 

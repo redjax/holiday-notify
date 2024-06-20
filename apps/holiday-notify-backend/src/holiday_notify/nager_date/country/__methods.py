@@ -179,7 +179,7 @@ def add_country_info_to_database(
                     log.debug(
                         f"Border country '{border_country.commonName}' not found in database. Adding to model"
                     )
-                    border_model = NagerAPI.NagerBorderCountryModel(
+                    border_model = NagerAPI.NagerCountryModel(
                         commonName=border_country.commonName,
                         officialName=border_country.officialName,
                         countryCode=border_country.countryCode,
@@ -203,8 +203,6 @@ def add_country_info_to_database(
 
                 raise exc
 
-    # log.debug(f"Country info database model: {country_info_model.__dict__}")
-
 
 def get_country_info(
     country_code: str = None,
@@ -225,10 +223,12 @@ def get_country_info(
                 f"Non-200 response: [{res.status_code}: {res.reason_phrase}]: {res.text}"
             )
 
-        res_decoded = http_ctl.decode_res_content(res=res)
+        res_decoded: dict = http_ctl.decode_res_content(res=res)
         # log.debug(f"Decoded response ({type(res_decoded)}): {res_decoded}")
 
-        country_info = NagerAPI.NagerCountry.model_validate(res_decoded)
+        country_info: NagerAPI.NagerCountry = NagerAPI.NagerCountry.model_validate(
+            res_decoded
+        )
         # log.debug(f"Country info: {country_info}")
 
     try:

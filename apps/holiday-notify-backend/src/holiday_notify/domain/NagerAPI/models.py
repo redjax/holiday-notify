@@ -49,16 +49,6 @@ class NagerCountryModelBase(sqlalchemy_utils.Base):
     region: so.Mapped[str | None] = so.mapped_column(sa.String, nullable=True)
 
 
-# borders_association_table = sa.Table(
-#     "borders",
-#     sqlalchemy_utils.Base.metadata,
-#     sa.Column("country_id", sa.Integer, sa.ForeignKey("country.id"), primary_key=True),
-#     sa.Column(
-#         "border_country_id", sa.Integer, sa.ForeignKey("country.id"), primary_key=True
-#     ),
-# )
-
-
 class NagerCountryModel(NagerCountryModelBase):
     __tablename__ = "country"
 
@@ -67,52 +57,10 @@ class NagerCountryModel(NagerCountryModelBase):
     borders = so.relationship("NagerCountryModel")
 
 
-class NagerBorderCountryModel(NagerCountryModelBase):
-    __tablename__ = "border_country_info"
-
-    id: so.Mapped[sqlalchemy_utils.custom_types.INT_PK]
-
-
 # class NagerBorderCountryModel(NagerCountryModelBase):
-#     __tablename__ = "borders"
+#     __tablename__ = "border_country_info"
 
-#     # bordering_countries: so.Mapped[list["NagerCountryModel"] | None] = so.relationship(
-#     #     "NagerCountryModel",
-#     #     secondary=country_border_association,
-#     #     primaryjoin="NagerBorderCountryModel.id == country_border_association.c.border_country_id",
-#     #     secondaryjoin="NagerCountryModel.id == country_border_association.c.country_id",
-#     #     back_populates="borders",
-#     # )
-
-
-# class NagerCountryModel(NagerCountryModelBase):
-#     __tablename__ = "countries"
-
-#     # borders: so.Mapped[list[NagerBorderCountryModel] | None] = so.relationship(
-#     #     "NagerBorderCountryModel",
-#     #     secondary=country_border_association,
-#     #     primaryjoin="NagerCountryModel.id == country_border_association.c.country_id",
-#     #     secondaryjoin="NagerBorderCountryModel.id == country_border_association.c.border_country_id",
-#     #     back_populates="bordering_countries",
-#     # )
-
-
-# # Define the relationships after the models are defined
-# NagerBorderCountryModel.bordering_countries = so.relationship(
-#     "NagerCountryModel",
-#     secondary=country_border_association,
-#     primaryjoin="NagerBorderCountryModel.id == country_border_association.c.border_country_id",
-#     secondaryjoin="NagerCountryModel.id == country_border_association.c.country_id",
-#     back_populates="borders",
-# )
-
-# NagerCountryModel.borders = so.relationship(
-#     "NagerBorderCountryModel",
-#     secondary=country_border_association,
-#     primaryjoin="NagerCountryModel.id == country_border_association.c.country_id",
-#     secondaryjoin="NagerBorderCountryModel.id == country_border_association.c.border_country_id",
-#     back_populates="bordering_countries",
-# )
+#     id: so.Mapped[sqlalchemy_utils.custom_types.INT_PK]
 
 
 class NagerCountryRepositoryBase(metaclass=abc.ABCMeta):

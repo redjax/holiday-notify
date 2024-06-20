@@ -12,14 +12,14 @@ from holiday_notify.database import db_settings, DBSettings
 def get_or_create_border_country(
     border_country: NagerAPI.NagerBorderCountry = None,
     db_settings: DBSettings = db_settings,
-) -> NagerAPI.NagerBorderCountryModel:
+) -> NagerAPI.NagerCountryModel:
     """Get existing border country model from database, or create if one does not exist."""
     with sqlalchemy_utils.get_session_pool(
         engine=db_settings.get_engine()
     )() as session:
 
         border_model = (
-            session.query(NagerAPI.NagerBorderCountryModel)
+            session.query(NagerAPI.NagerCountryModel)
             .filter_by(
                 commonName=border_country.commonName,
                 officialName=border_country.officialName,
@@ -30,7 +30,7 @@ def get_or_create_border_country(
         )
 
     if not border_model:
-        border_model = NagerAPI.NagerBorderCountryModel(
+        border_model = NagerAPI.NagerCountryModel(
             commonName=border_country.commonName,
             officialName=border_country.officialName,
             countryCode=border_country.countryCode,
