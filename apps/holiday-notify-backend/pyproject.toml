@@ -30,3 +30,9 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff>=0.4.9",
+    "nox>=2024.4.15",
+]
