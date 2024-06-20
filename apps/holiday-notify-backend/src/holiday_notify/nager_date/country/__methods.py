@@ -16,6 +16,7 @@ import httpx
 from red_utils.ext import httpx_utils, sqlalchemy_utils
 from sqlalchemy.exc import IntegrityError
 
+
 def add_countries_meta_to_database(
     db_settings: DBSettings = db_settings,
     models: list[NagerAPI.NagerCountryMetaModel] = None,
@@ -233,7 +234,9 @@ def get_country_info(
 
     try:
         country_info_model: NagerAPI.NagerCountryModel = (
-            NagerAPI.country_info_schema_to_model(country_schema=country_info)
+            NagerAPI.nager_country.country_info_schema_to_model(
+                country_schema=country_info
+            )
         )
     except Exception as exc:
         msg = Exception(
