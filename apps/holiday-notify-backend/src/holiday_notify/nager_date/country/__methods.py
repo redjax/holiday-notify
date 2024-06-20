@@ -1,20 +1,20 @@
-import typing as t
-import logging
+from __future__ import annotations
 
 import json
+import logging
+import typing as t
 
 log = logging.getLogger("holiday_notify.nager_date.country.methods")
 
+from holiday_notify.database import DBSettings, db_settings
+from holiday_notify.domain import NagerAPI
+from holiday_notify.helpers import http_helpers
 from holiday_notify.nager_date.constants import BASE_URL
 from holiday_notify.nager_date.endpoints import AVAILABLE_COUNTRIES, COUNTRY_INFO
-from holiday_notify.helpers import http_helpers
-from holiday_notify.domain import NagerAPI
-from holiday_notify.database import db_settings, DBSettings
 
 import httpx
 from red_utils.ext import httpx_utils, sqlalchemy_utils
 from sqlalchemy.exc import IntegrityError
-
 
 def add_countries_meta_to_database(
     db_settings: DBSettings = db_settings,

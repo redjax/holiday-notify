@@ -1,13 +1,14 @@
+from __future__ import annotations
+
 import logging
 
 log = logging.getLogger("holidy_notify.domain.NagerAPI.methods")
 
+from holiday_notify.database import DBSettings, db_settings
 from holiday_notify.domain import NagerAPI
 
 from red_utils.ext import sqlalchemy_utils
 from sqlalchemy.exc import IntegrityError, NoResultFound
-from holiday_notify.database import db_settings, DBSettings
-
 
 def get_or_create_border_country(
     border_country: NagerAPI.NagerBorderCountry = None,

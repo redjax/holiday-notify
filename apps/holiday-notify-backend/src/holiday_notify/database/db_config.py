@@ -1,8 +1,10 @@
-from typing import Union
-from dynaconf import Dynaconf
-from pydantic import Field, field_validator, ValidationError
-from pydantic_settings import BaseSettings
+from __future__ import annotations
 
+from typing import Union
+
+from dynaconf import Dynaconf
+from pydantic import Field, ValidationError, field_validator
+from pydantic_settings import BaseSettings
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 

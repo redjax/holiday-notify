@@ -1,14 +1,15 @@
+from __future__ import annotations
+
 import logging
 
 log = logging.getLogger("holiday_notify.domain.NagerAPI.models")
 
-import typing as t
 import abc
+import typing as t
 
 from red_utils.ext import sqlalchemy_utils
 import sqlalchemy as sa
 import sqlalchemy.orm as so
-
 
 class NagerCountryMetaModel(sqlalchemy_utils.Base):
     __tablename__ = "country_meta"

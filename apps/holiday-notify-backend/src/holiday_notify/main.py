@@ -1,22 +1,21 @@
+from __future__ import annotations
+
 import logging
 
 log = logging.getLogger("holiday_notify")
 
+from holiday_notify import nager_date
 from holiday_notify.core import settings
 from holiday_notify.database import db_settings
-from holiday_notify import nager_date
-
-import httpx
-import hishel
-import red_logging
-from red_utils.ext import httpx_utils
-from red_utils.ext import sqlalchemy_utils
-from holiday_notify.helpers import http_helpers
-from sqlalchemy.exc import IntegrityError
-
 from holiday_notify.domain import NagerAPI
-from holiday_notify.setup import setup_logging, setup_db
+from holiday_notify.helpers import http_helpers
+from holiday_notify.setup import setup_db, setup_logging
 
+import hishel
+import httpx
+import red_logging
+from red_utils.ext import httpx_utils, sqlalchemy_utils
+from sqlalchemy.exc import IntegrityError
 
 if __name__ == "__main__":
     setup_logging()

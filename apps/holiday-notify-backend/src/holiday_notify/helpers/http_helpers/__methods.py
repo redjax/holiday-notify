@@ -1,22 +1,24 @@
+from __future__ import annotations
+
 import logging
 
 log = logging.getLogger("holiday_notify.helpers.http_helpers")
 
 import typing as t
+
 import httpx
 from httpx import URL
 from httpx._types import (
-    QueryParamTypes,
-    HeaderTypes,
+    AsyncByteStream,
     CookieTypes,
+    HeaderTypes,
+    QueryParamTypes,
     RequestContent,
     RequestData,
     RequestExtensions,
     RequestFiles,
     SyncByteStream,
-    AsyncByteStream,
 )
-
 
 def build_request(
     method: str = "GET",

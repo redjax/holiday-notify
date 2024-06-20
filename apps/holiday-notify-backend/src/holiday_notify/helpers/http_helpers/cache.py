@@ -1,11 +1,12 @@
-import typing as t
-from pathlib import Path
+from __future__ import annotations
+
 import logging
+from pathlib import Path
+import typing as t
 
 log = logging.getLogger("holiday_notify.helpers.http_helpers")
 
 from red_utils.ext import httpx_utils
-
 
 def get_cache_client_controller(
     cache_dir: t.Union[str, Path] = None, ttl: int = 900, force_cache: bool = False

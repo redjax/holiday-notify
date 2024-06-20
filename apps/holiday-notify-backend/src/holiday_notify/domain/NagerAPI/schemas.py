@@ -1,17 +1,19 @@
+from __future__ import annotations
+
 import logging
 
 log = logging.getLogger("holiday_notify.domain.NagerDate.schemas")
 
 import typing as t
+
 from pydantic import (
     BaseModel,
-    Field,
-    field_validator,
-    ValidationError,
     ConfigDict,
+    Field,
+    ValidationError,
     computed_field,
+    field_validator,
 )
-
 
 class NagerCountryMeta(BaseModel):
     name: str = Field(default=None)

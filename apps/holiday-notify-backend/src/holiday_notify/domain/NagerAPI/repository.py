@@ -1,17 +1,19 @@
+from __future__ import annotations
+
 import logging
 
 log = logging.getLogger("holiday_notify.domain.NagerAPI.repository")
 
-from .models import NagerCountryMetaModel, NagerCountryMetaRepositoryBase
 from .models import (
+    NagerCountryMetaModel,
+    NagerCountryMetaRepositoryBase,
     NagerCountryModel,
     NagerCountryRepositoryBase,
 )
 
 import sqlalchemy as sa
-import sqlalchemy.orm as so
 from sqlalchemy.exc import IntegrityError
-
+import sqlalchemy.orm as so
 
 class NagerCountryMetaRepository(NagerCountryMetaRepositoryBase):
     def __init__(self, session: so.Session) -> None:  # noqa: D107

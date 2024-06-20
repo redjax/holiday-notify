@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from .__enum import EndpointEnum
 
 AVAILABLE_COUNTRIES: str = EndpointEnum.AVAILABLE_COUNTRIES.value

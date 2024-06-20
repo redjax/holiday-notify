@@ -1,13 +1,14 @@
+from __future__ import annotations
+
 import logging
 
 log = logging.getLogger("holiday_notify.setup.db")
 
-from holiday_notify.database import db_settings, DBSettings
-from red_utils.ext import sqlalchemy_utils
-import sqlalchemy.orm as so
-
+from holiday_notify.database import DBSettings, db_settings
 from holiday_notify.domain import NagerAPI
 
+from red_utils.ext import sqlalchemy_utils
+import sqlalchemy.orm as so
 
 def setup_db(
     base_obj: so.DeclarativeBase = sqlalchemy_utils.Base,
