@@ -8,12 +8,12 @@ import typing as t
 
 from pydantic import (
     BaseModel,
-    ConfigDict,
     Field,
     ValidationError,
     computed_field,
     field_validator,
 )
+
 
 class NagerCountryMeta(BaseModel):
     name: str = Field(default=None)
