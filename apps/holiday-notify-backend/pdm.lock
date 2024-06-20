@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:06a5766bd623c1b8f6510a30d3e5b2e2d999cc6fee81f76fd55ccf00ea350369"
+content_hash = "sha256:c65c0465f68bca5addb1fcf73e4eb150dcbb156165e0a9a4deb795ad3603c39d"
 
 [[package]]
 name = "annotated-types"
@@ -633,4 +633,15 @@ dependencies = [
 files = [
     {file = "virtualenv-20.26.2-py3-none-any.whl", hash = "sha256:a624db5e94f01ad993d476b9ee5346fdf7b9de43ccaee0e0197012dc838a0e9b"},
     {file = "virtualenv-20.26.2.tar.gz", hash = "sha256:82bf0f4eebbb78d36ddaee0283d43fe5736b53880b8a8cdcd37390a07ac3741c"},
+]
+
+[[package]]
+name = "vulture"
+version = "2.11"
+requires_python = ">=3.8"
+summary = "Find dead code"
+groups = ["dev"]
+files = [
+    {file = "vulture-2.11-py2.py3-none-any.whl", hash = "sha256:12d745f7710ffbf6aeb8279ba9068a24d4e52e8ed333b8b044035c9d6b823aba"},
+    {file = "vulture-2.11.tar.gz", hash = "sha256:f0fbb60bce6511aad87ee0736c502456737490a82d919a44e6d92262cb35f1c2"},
 ]

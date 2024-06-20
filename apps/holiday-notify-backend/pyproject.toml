@@ -35,4 +35,5 @@ distribution = true
 dev = [
     "ruff>=0.4.9",
     "nox>=2024.4.15",
+    "vulture>=2.11",
 ]
