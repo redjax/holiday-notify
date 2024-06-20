@@ -1,0 +1,20 @@
+{
+    "commonName": "United States",
+    "officialName": "United States of America",
+    "countryCode": "US",
+    "region": "Americas",
+    "borders": [
+        {
+            "commonName": "Canada",
+            "officialName": "Canada",
+            "countryCode": "CA",
+            "region": "Americas"
+        },
+        {
+            "commonName": "Mexico",
+            "officialName": "United Mexican States",
+            "countryCode": "MX",
+            "region": "Americas"
+        }
+    ]
+}
