@@ -21,10 +21,22 @@ if __name__ == "__main__":
     setup_logging()
     setup_db()
 
-    # all_countries: ListNagerCountryMetas = nager_date.country.get_all_countries_meta()
+    # all_countries: NagerAPI.nager_country.ListNagerCountryMetas = (
+    #     nager_date.country.get_all_countries_meta()
+    # )
     # log.debug(f"Retrieved [{all_countries.count}] country/countries.")
 
-    country_info: NagerAPI.NagerCountry = nager_date.country.get_country_info(
-        country_code="RU"
-    )
-    log.debug(f"Country info (schema): {country_info}")
+    # country_info: NagerAPI.NagerCountry = nager_date.country.get_country_info(
+    #     country_code="RU"
+    # )
+    # log.debug(f"Country info (schema): {country_info}")
+
+    try:
+        countries = nager_date.country.get_all_countries_borders()
+    except Exception as exc:
+        msg = Exception(
+            f"Unhandled exception getting all countries and their borders. Details: {exc}"
+        )
+        log.error(msg)
+
+        raise exc

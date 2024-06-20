@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import typing as t
+import time
 
 log = logging.getLogger("holiday_notify.nager_date.country.methods")
 
@@ -15,6 +16,7 @@ from holiday_notify.nager_date.endpoints import AVAILABLE_COUNTRIES, COUNTRY_INF
 import httpx
 from red_utils.ext import httpx_utils, sqlalchemy_utils
 from sqlalchemy.exc import IntegrityError
+from red_utils.ext.context_managers import cli_spinners
 
 
 def add_countries_meta_to_database(
@@ -35,9 +37,9 @@ def add_countries_meta_to_database(
         "skipped": [],
     }
 
-    with sqlalchemy_utils.get_session_pool(
-        engine=db_settings.get_engine()
-    )() as session:
+    session_pool = db_settings.get_session_pool()
+
+    with session_pool() as session:
         repo = NagerAPI.NagerCountryMetaRepository(session=session)
 
         for m in models:
@@ -91,7 +93,7 @@ def add_countries_meta_to_database(
 
 def get_all_countries_meta(
     controller: httpx_utils.HishelCacheClientController = http_helpers.HTTP_CONTROLLER,
-) -> NagerAPI.ListNagerCountryMetas:
+) -> NagerAPI.nager_country.ListNagerCountryMetas:
     request: httpx.Request = httpx_utils.build_request(
         url=f"{BASE_URL}/{AVAILABLE_COUNTRIES}"
     )
@@ -110,7 +112,9 @@ def get_all_countries_meta(
         res_decoded = http_ctl.decode_res_content(res=res)
         # log.debug(f"Decoded response ({type(res_decoded)}): {res_decoded}")
 
-        country_list = NagerAPI.ListNagerCountryMetas(countries=res_decoded)
+        country_list = NagerAPI.nager_country.ListNagerCountryMetas(
+            countries=res_decoded
+        )
         # log.debug(f"Countries: {country_list.countries}")
 
     models: list[NagerAPI.NagerCountryMetaModel] = []
@@ -166,10 +170,10 @@ def add_country_info_to_database(
 
         raise exc
 
+    session_pool = db_settings.get_session_pool()
+
     if country_info.borders:
-        with sqlalchemy_utils.get_session_pool(
-            engine=db_settings.get_engine()
-        )() as session:
+        with session_pool() as session:
             repo = NagerAPI.NagerCountryRepository(session=session)
             for border_country in country_info.borders:
                 border_model: NagerAPI.NagerCountryModel = repo.get_by_country_code(
@@ -249,3 +253,55 @@ def get_country_info(
     # log.debug(f"Country info model: {country_info_model.__dict__}")
 
     return country_info
+
+
+def get_all_countries_borders(
+    request_pause: int | None = 5,
+) -> list[NagerAPI.NagerCountry]:
+    log.info("Getting all countries and their borders")
+    try:
+        all_country_metas: NagerAPI.nager_country.ListNagerCountryMetas = (
+            get_all_countries_meta()
+        )
+    except Exception as exc:
+        msg = Exception(
+            f"Unhandled exception getting all country metadata. Details: {exc}"
+        )
+        log.error(msg)
+
+        raise exc
+
+    assert (
+        isinstance(all_country_metas.countries, list)
+        and len(all_country_metas.countries) > 0
+    ), ValueError(
+        f"all_country_metas.countries should be a non-empty list of countries. Got type: ({type(all_country_metas.countries)})"
+    )
+
+    country_info_objs: list[NagerAPI.NagerCountry] = []
+
+    for _country_meta in all_country_metas.countries:
+        try:
+            country_info: NagerAPI.NagerCountry = get_country_info(
+                country_code=_country_meta.countryCode
+            )
+            country_info_objs.append(country_info)
+        except Exception as exc:
+            msg = Exception(
+                f"Unhandled exception getting country information for country '{_country_meta.name}'. Details: {exc}"
+            )
+            log.error(msg)
+
+            continue
+
+        if request_pause:
+            assert isinstance(request_pause, int) and request_pause > 0, TypeError(
+                f"Request pause must be a non-zero integer"
+            )
+            log.debug(f"Pausing for [{request_pause}] second(s) between requests")
+            with cli_spinners.SimpleSpinner(
+                message=f"Pausing [{request_pause}] second(s) between requests ..."
+            ):
+                time.sleep(5)
+
+    return country_info_objs
